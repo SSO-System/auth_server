@@ -1,3 +1,3 @@
 import { db } from '../connection';
 
-export const Account = db.collection('account');
+export const Account = db.collection('oidcaccount');
