@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <%- include('components/head'); -%>
+    <body style="background-color: #f6f7f9;">
+        <div>
+            <img src="https://firebasestorage.googleapis.com/v0/b/oauth2-c28ca.appspot.com/o/access%20denied.png?alt=media&token=57f1806f-77a6-4f58-a496-e32174b7f06d" width="250px" height="250px" style="display: block; margin: auto;"/>
+        </div>
+        <div style="text-align: center;">
+            <h1> Access Denied </h1>
+            <p> You do not have permission to login to <span style="font-weight: bold;"> <%= clientId %> </span> </p>
+            <p> Please logout and change another account </p>
+            <button class="login login-submit" onclick="logout()"> Logout </button>
+            <p> Or </p>
+            <p> Contact Admin for further permisson!</p>
+            <p style="font-size: 14px;"> <span style="font-weight: bold;"> Error Code: </span> <%= errorCode %> </p>
+        </div>
+        <script>
+            function logout() {
+                window.location.href = "<%= authUrl %>" + "/session/end";
+            }
+        </script>
+    </body>
+</html>

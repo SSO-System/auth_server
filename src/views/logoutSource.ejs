@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <%- include('components/head'); -%>
+    <head>
+        <title>Logout Request</title>
+        <style>/* css and html classes omitted for brevity, see lib/helpers/defaults.js */</style>
+    </head>
+    <body>
+        <div style="position: relative; width: 25%; margin: auto; text-align: center; font-size: 12px" class="login-card" >
+            <h1> 
+                Are you sure, 
+                <br /> you want to logout from 
+                <br /> <%= host %> ?
+            </h1>
+            <%- form %>
+            <div style="width: 25%; display: inline-block;">
+                <button class="login login-submit" style="background-color: darkgray; width: auto; display: inline-block" type="submit" form="op.logoutForm"> Cancel </button>
+            </div>
+            <div style="width: 25%; display: inline-block;">
+                <button class="login login-submit" style="width: auto; display: inline-block" type="submit" form="op.logoutForm" value="yes" name="logout"> Logout </button>
+            </div>
+        </div>
+    </body>
+    <script>
+        console.log("<%=form %>");
+        document.getElementById('op.logoutForm').hidden = true;
+    </script>
+</html>
+          

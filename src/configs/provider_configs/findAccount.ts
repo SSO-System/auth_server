@@ -6,20 +6,26 @@ export const findAccount = async (ctx, id) => {
       account && {
         accountId: id,
         async claims(use /* id_token, userinfo */, scope, claims) {
-          // console.log(`claims(${use}, ${scope}, ${JSON.stringify(claims)})`);
+          
           if (!scope) return undefined;
           const openid = { sub: id };
+          const profile = {
+            birthdate: account.birthdate,
+            gender: account.gender,
+            firstname: account.firstname,
+            lastname: account.lastname,
+            picture: account.picture,
+            username: account.username
+          }
           const email = {
             email: account.email,
-            email_verified: account.emailVerified,
+            email_verified: account.email_verified,
           };
-          console.log({
-            ...(scope.includes("openid") && openid),
-            ...(scope.includes("email") && email),
-          })
+
           return {
             ...(scope.includes("openid") && openid),
             ...(scope.includes("email") && email),
+            ...(scope.includes("profile") && profile),
           };
         },
       }

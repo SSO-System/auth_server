@@ -10,8 +10,9 @@ import { oidc } from "./configs/provider";
 import router from "./routes";
 import { initializeOIDCModel } from "./db/firestore/connection";
 
-dotenv.config({ path: path.resolve("oidc/.env") });
+dotenv.config({ path: path.resolve(".env") });
 
+const PORT = process.env.PORT || 3000;
 const start = async () => {
   await initializeOIDCModel();
   const app = new Koa();
@@ -19,7 +20,7 @@ const start = async () => {
     cache: false,
     viewExt: "ejs",
     layout: false,
-    root: path.resolve("oidc/src/views"),
+    root: path.resolve("src/views"),
   });
 
   const provider = oidc(process.env.ISSUER as string, configuration);
@@ -29,9 +30,9 @@ const start = async () => {
   app.use(router(provider).routes());
   app.use(mount(provider.app));
 
-  app.listen(process.env.PORT, () => {
+  app.listen(PORT, () => {
     console.log(
-      `oidc-provider listening on port ${process.env.PORT}, check http://localhost:${process.env.PORT}/.well-known/openid-configuration`
+      `oidc-provider listening on port ${PORT}, check http://localhost:${PORT}/.well-known/openid-configuration`
     );
   });
 };

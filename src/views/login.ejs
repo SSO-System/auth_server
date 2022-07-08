@@ -9,21 +9,19 @@
         action="/interaction/<%= uid %>/login"
         method="post"
       >
-        <label>Username</label>
         <input
           required
           type="text"
           name="username"
-          placeholder="Enter any login"
-          value="sample"
+          placeholder="Username"
+          value=""
         />
-        <label>Password</label>
         <input
           required
           type="password"
           name="password"
-          placeholder="and password"
-          value="pass"
+          placeholder="Password"
+          value=""
         />
 
         <button type="submit" class="login login-submit">Sign-in</button>
@@ -32,6 +30,6 @@
         <a href="/interaction/<%= uid %>/abort">[ Cancel ]</a>
       </div>
     </div>
-    <%- include('components/footer'); -%>
+    <!-- <%- include('components/footer'); -%> -->
   </body>
 </html>
