@@ -23,14 +23,19 @@
       <h1>Client Register</h1>
 
       <label for="client_id">client_id</label>
-      <input type="text" name="client_id" id="client_id" value="client_1" />
+      <input
+        type="text"
+        name="client_id"
+        id="client_id"
+        value="<%= client_id %>"
+      />
       <br />
       <label for="client_secret">client_secret</label>
       <input
         type="text"
         name="client_secret"
         id="client_secret"
-        value="123456"
+        value="<%= client_secret %>"
       />
       <br />
       <!-- <select name="grant_types" id="grant_types" class="select__grant">

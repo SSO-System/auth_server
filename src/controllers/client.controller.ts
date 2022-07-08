@@ -1,7 +1,7 @@
 
 import { Middleware } from "koa";
 import * as clientService from "../services/client.service";
-
+import randomByte from "random-bytes-js"
 export default (): { [key: string]: Middleware } => ({
  
 //   register: async (ctx) => {
@@ -14,8 +14,10 @@ export default (): { [key: string]: Middleware } => ({
 //   },
 
   client_form: async (ctx) => {
+    const client_id = randomByte.randHex(10)
+    const client_secret = randomByte.rand64(10)
     return ctx.render("clientRegister", {
-      authServerUrl: "http://localhost:3000", title:"client register"
+      authServerUrl: "http://localhost:3000", title:"client register", client_id: client_id, client_secret: client_secret
     });
   },
 
