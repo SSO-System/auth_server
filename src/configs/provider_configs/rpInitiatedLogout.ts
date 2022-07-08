@@ -16,7 +16,6 @@ export const rpInitiatedLogout = {
           clientId, clientName, clientUri, initiateLoginUri, logoUri, policyUri, tosUri,
         } = ctx.oidc.client || {}; // client is defined if the user chose to stay logged in with the OP
         const display = clientName || clientId;
-        console.log(ctx.oidc);
         ctx.body = `<!DOCTYPE html>
           <head>
             <title>Sign-out Success</title>

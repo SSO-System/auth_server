@@ -26,10 +26,10 @@ const start = async () => {
   const provider = oidc(process.env.ISSUER as string, configuration);
 
   // if (process.env.NODE_ENV === 'production') {
-    provider.proxy = true;
+    // provider.proxy = true;
   // }
 
-  app.use(cors());
+  // app.use(cors());
   app.use(koaStatic(path.resolve("public")));
   app.use(router(provider).routes());
   app.use(mount(provider.app));
