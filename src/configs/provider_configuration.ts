@@ -7,21 +7,23 @@ import { features } from "./provider_configs/features";
 import { jwks } from "./provider_configs/jwks";
 import { ttl } from "./provider_configs/ttl";
 import { scopes } from "./provider_configs/scopes";
+import { renderError } from "./provider_configs/renderError";
 
 export const configuration: Configuration = {
-  adapter: FirestoreAdapter,
   extraClientMetadata,
   clientBasedCORS,
-  findAccount: findAccount,
+  findAccount,
+  claims,
+  scopes,
+  renderError,
+  features,
+  jwks,
+  ttl,
+  adapter: FirestoreAdapter,
   clients: [
     // Dynamic Clients
   ],
-  claims,
-  scopes: scopes,
-  features,
-  jwks,
   cookies: {
     keys: ["subzero"],
   },
-  ttl
 };

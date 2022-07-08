@@ -1,6 +1,8 @@
 import { errors } from "oidc-provider";
+import { rpInitiatedLogout } from "./rpInitiatedLogout";
 
 export const features = {
+    rpInitiatedLogout,
     clientCredentials: { enabled: true },
     introspection: {
       enabled: true,

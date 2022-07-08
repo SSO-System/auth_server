@@ -1,6 +1,6 @@
-import { Middleware } from "koa";
-import { Provider } from "oidc-provider";
-import * as accountService from "../services/account.service";
+import { Middleware } from 'koa';
+import { Provider } from 'oidc-provider';
+import * as accountService from '../services/account.service';
 
 function debug(obj: any) {
   return Object.entries(obj)
@@ -8,7 +8,7 @@ function debug(obj: any) {
       (ent: [string, any]) =>
         `<strong>${ent[0]}</strong>: ${JSON.stringify(ent[1])}`
     )
-    .join("<br>");
+    .join('<br>');
 }
 
 export default (oidc: Provider): { [key: string]: Middleware } => ({
@@ -16,7 +16,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
     const {
       prompt: { name },
     } = await oidc.interactionDetails(ctx.req, ctx.res);
-    if (name === "login") {
+    if (name === 'login') {
       const account = await accountService.get(ctx.request.body.username);
       let result: any;
       if (account?.password === ctx.request.body.password) {
@@ -27,8 +27,8 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
         };
       } else {
         result = {
-          error: "access_denied",
-          error_description: "Username or password is incorrect.",
+          error: 'access_denied',
+          error_description: 'Username or password is incorrect.',
         };
       }
       return oidc.interactionFinished(ctx.req, ctx.res, result, {
@@ -42,7 +42,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       username: body.username,
       password: body.password,
     });
-    ctx.body = { message: "User successfully created"};
+    ctx.body = { message: 'User successfully created'};
   },
 
   confirmInteraction: async (ctx) => {
@@ -53,7 +53,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       session: { accountId },
     } = interactionDetails as any;
 
-    if (name === "consent") {
+    if (name === 'consent') {
       const grant = interactionDetails.grantId
         ? await oidc.Grant.find(interactionDetails.grantId)
         : new oidc.Grant({
@@ -63,7 +63,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
 
       if (grant) {
         if (details.missingOIDCScope) {
-          grant.addOIDCScope(details.missingOIDCScope.join(" "));
+          grant.addOIDCScope(details.missingOIDCScope.join(' '));
         }
         if (details.missingOIDCClaims) {
           grant.addOIDCClaims(details.missingOIDCClaims);
@@ -72,7 +72,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
           for (const [indicator, scopes] of Object.entries(
             details.missingResourceScopes
           )) {
-            grant.addResourceScope(indicator, (scopes as any).join(" "));
+            grant.addResourceScope(indicator, (scopes as any).join(' '));
           }
         }
 
@@ -84,13 +84,13 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
         });
       }
     } else {
-      ctx.throw(400, "Interaction prompt type must be `consent`.");
+      ctx.throw(400, 'Interaction prompt type must be `consent`.');
     }
   },
   abortInteraction: async (ctx) => {
     const result = {
-      error: "access_denied",
-      error_description: "End-User aborted interaction",
+      error: 'access_denied',
+      error_description: 'End-User aborted interaction',
     };
     await oidc.interactionFinished(ctx.req, ctx.res, result, {
       mergeWithLastSubmission: false,
@@ -101,25 +101,39 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       ctx.req,
       ctx.res
     )) as any;
+    
+    if (session?.accountId !== undefined) {
+      const account = await accountService.get(session.accountId);
+      const client_id = params.client_id;
+      
+      if (!account.allow_client.includes(client_id)) {        
+        return ctx.render('access_denied', {
+          authUrl: process.env.ISSUER,
+          title: 'Access Denied',
+          clientId: client_id,
+          errorCode: 403
+        })
+      }
+    }
 
-    if (prompt.name === "login") {
-      return ctx.render("login", {
+    if (prompt.name === 'login') {
+      return ctx.render('login', {
         uid,
         details: prompt.details,
         params,
         session: session ? debug(session) : undefined,
-        title: "Sign-In",
+        title: 'Sign-In',
         dbg: {
           params: debug(params),
           prompt: debug(prompt),
         },
       });
-    } else if (prompt.name === "consent") {
-      return ctx.render("consent", {
+    } else if (prompt.name === 'consent') {
+      return ctx.render('consent', {
         uid,
-        title: "Authorize",
+        title: 'Authorize',
         clientId: params.client_id,
-        scope: params.scope.replace(/ /g, ", "),
+        scope: params.scope.replace(/ /g, ', '),
         session: session ? debug(session) : undefined,
         dbg: {
           params: debug(params),
@@ -127,7 +141,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
         },
       });
     } else {
-      ctx.throw(501, "Not implemented.");
+      ctx.throw(501, 'Not implemented.');
     }
   },
 });

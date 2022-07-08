@@ -27,6 +27,6 @@ export const remove = async (client_id: string) => {
     if (doc.empty) {
         return undefined;
     } else {
-        return await Client.doc(client_id).delete()
+        return await Client.doc(client_id).delete();
     }
 }

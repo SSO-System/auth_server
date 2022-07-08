@@ -9,7 +9,6 @@ export default () => {
 
   const { client_form, client_registration, client_delete} =
     clientController();
-
   router.get("/clients", bodyParser, client_form);
   router.post("/clients", bodyParser, client_registration);
   router.delete("/clients", bodyParser, client_delete);

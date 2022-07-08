@@ -62,8 +62,7 @@ export default (): { [key: string]: Middleware } => ({
     }
     
     await clientService.set(body.client_id, newClient);
-    console.log("after register", newClient)
-    console.log("aslf")
+
     ctx.body = { message: "client successfully created"};
   },
 

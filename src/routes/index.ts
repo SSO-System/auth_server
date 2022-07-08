@@ -8,6 +8,5 @@ export default (oidc: Provider) => {
 
   router.use(authRouter(oidc).routes());
   router.use(clientRouter().routes())
-
   return router;
 };
