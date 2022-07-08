@@ -14,7 +14,6 @@ export default (oidc: Provider) => {
     authController(oidc);
 
   router.post("/users", bodyParser, onlyClient(oidc), register);
-
   router.post("/interaction/:uid/login", noCache, bodyParser, login);
   router.post("/interaction/:uid/confirm", noCache, confirmInteraction);
   router.get("/interaction/:uid/abort", noCache, abortInteraction);

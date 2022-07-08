@@ -44,6 +44,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
     });
     ctx.body = { message: "User successfully created"};
   },
+
   confirmInteraction: async (ctx) => {
     const interactionDetails = await oidc.interactionDetails(ctx.req, ctx.res);
     const {

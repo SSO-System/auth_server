@@ -12,7 +12,6 @@ export const initializeOIDCModel = async () => {
   const listDocument = await db.collection('oidcmodel').listDocuments();
   if (listDocument.length === 0) {
     await db.collection('oidcmodel').doc('This_collection_must_have_just_one_document').set({
-
     });
   }
 }

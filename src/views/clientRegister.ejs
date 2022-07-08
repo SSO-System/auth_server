@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title><%= title %></title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="main.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <form action="clients" method="post" class="login-card">
+      <h1>Client Register</h1>
+
+      <label for="client_id">client_id</label>
+      <input type="text" name="client_id" id="client_id" value="client_1" />
+      <br />
+      <label for="client_secret">client_secret</label>
+      <input
+        type="text"
+        name="client_secret"
+        id="client_secret"
+        value="123456"
+      />
+      <br />
+      <!-- <select name="grant_types" id="grant_types" class="select__grant">
+        <option value="authorization_code">authorization_code</option>
+        <option value="password">password</option>
+        <option value="refresh_token">refresh_token</option>
+        <option value="client_credentials">client_credentials</option>
+      </select> -->
+      <label for="grant_types">grant_types</label><br />
+      <div class="grant-containter">
+        <input
+          type="checkbox"
+          id="grant"
+          name="grant_types"
+          value="authorization_code"
+        />
+        <label for="grant_types"> authorization_code</label>
+        <br />
+        <input type="checkbox" id="grant" name="grant_types" value="password" />
+        <label for="grant_types">password</label>
+        <br />
+        <input
+          type="checkbox"
+          id="grant"
+          name="grant_types"
+          value="refresh_token"
+        />
+        <label for="grant_types">refresh_token</label>
+        <br />
+        <input
+          type="checkbox"
+          id="grant"
+          name="grant_types"
+          value="client_credentials"
+        />
+        <label for="grant_types"> client_credentials</label>
+        <br />
+      </div>
+      <br />
+      <div id="uri__input">
+        <label for="redirect_uris">redirect_uris</label>
+        <input
+          type="text"
+          name="redirect_uris"
+          id="redirect_uris"
+          value="http://localhost:3005/cb"
+        />
+        <i class="fa-solid fa-plus addIcon" onclick="addRedirectInput()"></i>
+      </div>
+
+      <div id="uri-logout__input">
+        <label for="post_logout_redirect_uris">logout_redirect_uris</label>
+        <input
+          type="text"
+          name="post_logout_redirect_uris"
+          id="post_logout_redirect_uris"
+          value="http://localhost:3005/logout_callback"
+        />
+        <i
+          class="fa-solid fa-plus addIcon"
+          onclick="addRedirectLogoutInput()"
+        ></i>
+      </div>
+      <label for="scope">scope</label>
+      <input
+        type="text"
+        name="scope"
+        id="scope"
+        value="openid offline_access profile email phone address"
+      />
+      <br />
+      <div id="origin__input">
+        <label for="origins">origins</label>
+        <input
+          type="text"
+          name="origins"
+          id="origins"
+          value="http://localhost:3005"
+        />
+        <i class="fa-solid fa-plus addIcon" onclick="addOriginInput()"></i>
+      </div>
+      <br />
+
+      <button type="submit" class="login login-submit">Register</button>
+    </form>
+
+    <script>
+      var i = 0;
+
+      function createInputElement(name, id, inc) {
+        var inputField = document.createElement("input");
+        inputField.setAttribute("type", "text");
+        inputField.setAttribute("name", name + inc);
+        inputField.setAttribute("id", id);
+        inputField.setAttribute("value", "");
+        return inputField;
+      }
+
+      function addInput(id_parent, name, id, inc) {
+        var inputs = document.getElementById(id_parent);
+        inputs.appendChild(createInputElement(name, id, inc));
+      }
+
+      function addRedirectInput() {
+        addInput("uri__input", "redirect_uris", "redirect_uris", i);
+        i++;
+      }
+
+      function addOriginInput() {
+        addInput("origin__input", "origins", "origins", i);
+        i++;
+      }
+
+      function addRedirectLogoutInput() {
+        addInput(
+          "uri-logout__input",
+          "post_logout_redirect_uris",
+          "post_logout_redirect_uris",
+          i
+        );
+        i++;
+      }
+    </script>
+  </body>
+</html>

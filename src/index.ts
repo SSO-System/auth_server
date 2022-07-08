@@ -10,7 +10,7 @@ import { oidc } from "./configs/provider";
 import router from "./routes";
 import { initializeOIDCModel } from "./db/firestore/connection";
 
-dotenv.config({ path: path.resolve("oidc/.env") });
+dotenv.config();
 
 const start = async () => {
   await initializeOIDCModel();
@@ -19,9 +19,9 @@ const start = async () => {
     cache: false,
     viewExt: "ejs",
     layout: false,
-    root: path.resolve("oidc/src/views"),
+    root: path.resolve("src/views"),
   });
-
+// console.log(process.env.ISSUER)
   const provider = oidc(process.env.ISSUER as string, configuration);
 
   app.use(cors());
