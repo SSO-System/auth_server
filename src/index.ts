@@ -22,7 +22,7 @@ const start = async () => {
     layout: false,
     root: path.resolve("src/views"),
   });
-
+// console.log(process.env.ISSUER)
   const provider = oidc(process.env.ISSUER as string, configuration);
 
   // if (process.env.NODE_ENV === 'production') {

@@ -20,6 +20,7 @@ body.app {
   border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  /* position: relative; */
 }
 
 .login-card + .login-card {
@@ -39,18 +40,34 @@ body.app {
   position: relative;
 }
 
-.login-card input {
+.login-card input:not(#grant),
+.login-card .select__grant {
   height: 44px;
   font-size: 16px;
   width: 100%;
   margin-bottom: 10px;
-  -webkit-appearance: none;
   background: #fff;
   border: 1px solid #d9d9d9;
   border-top: 1px solid #c0c0c0;
   padding: 0 8px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+#uri__input,
+#origin__input,
+#uri-logout__input {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.grant-containter {
+  padding-top: 0.5rem;
+}
+
+.grant-containter label {
+  color: black !important;
 }
 
 .login {
@@ -94,6 +111,22 @@ body.app {
 
 .login-card input[type="checkbox"] {
   margin-bottom: 10px;
+}
+
+.addIcon {
+  position: absolute;
+  top: 26px;
+  right: -34px;
+  font-size: 1rem;
+  border-radius: 50%;
+  background-color: #4d90fe;
+  color: white;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.addIcon:hover {
+  background-color: rgb(24, 8, 253);
 }
 
 .login-card label {
