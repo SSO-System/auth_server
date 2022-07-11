@@ -22,14 +22,13 @@ const start = async () => {
     layout: false,
     root: path.resolve("src/views"),
   });
-// console.log(process.env.ISSUER)
+  
   const provider = oidc(process.env.ISSUER as string, configuration);
 
   // if (process.env.NODE_ENV === 'production') {
     // provider.proxy = true;
   // }
 
-  // app.use(cors());
   app.use(koaStatic(path.resolve("public")));
   app.use(router(provider).routes());
   app.use(mount(provider.app));
@@ -40,5 +39,5 @@ const start = async () => {
     );
   });
 };
-
+console.log(process.env.NODE_ENV);
 void start();
