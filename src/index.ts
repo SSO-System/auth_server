@@ -21,16 +21,16 @@ const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
 delete directives['form-action'];
 
 const pHelmet = promisify(helmet({
-  contentSecurityPolicy: {
-    useDefaults: false,
-    directives,
-  },
+  // contentSecurityPolicy: {
+  //   useDefaults: false,
+  //   directives,
+  // },
 }));
 
 app.use(async (ctx: any, next) => {
   const origSecure = ctx.req.secure;
   ctx.req.secure = ctx.request.secure;
-  await pHelmet(ctx.req, ctx.res);
+  // await pHelmet(ctx.req, ctx.res);
   ctx.req.secure = origSecure;
   return await next();
 });
