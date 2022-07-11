@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "base64url": "^3.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.0.0",
@@ -21,8 +22,9 @@
     "koa-mount": "^4.0.0",
     "koa-router": "^10.1.1",
     "koa-static": "^5.0.0",
-    "oidc-provider": "^7.11.4",
     "nanoid": "^4.0.0",
+    "nodemon": "^2.0.19",
+    "oidc-provider": "^7.11.4",
     "path": "^0.12.7",
     "random-bytes-js": "^1.0.0",
     "ts-node": "^10.8.1",
