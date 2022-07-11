@@ -1,5 +1,8 @@
 import { errors } from "oidc-provider";
 import { rpInitiatedLogout } from "./rpInitiatedLogout";
+// import  {nanoid}  from 'nanoid'
+import base64url from "base64url";
+import {randomFill, randomUUID} from 'crypto'
 
 export const features = {
     rpInitiatedLogout,
@@ -42,5 +45,24 @@ export const features = {
           }
         }
       },
+    },
+    registration: {
+      enabled: false,
+      idFactory(ctx) {
+        return randomUUID();
+      }, // see expanded details below
+      initialAccessToken: false,
+      issueRegistrationAccessToken: true,
+      policies: undefined,
+      secretFactory(ctx) {
+        const bytes = Buffer.allocUnsafe(64);
+        randomFill(bytes, (err, buf) => {
+          if (err) {
+            throw err;
+          }
+        });
+        return base64url(bytes);
+      } // see expanded details below
+
     },
   }
