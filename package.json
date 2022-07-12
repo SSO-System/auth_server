@@ -24,6 +24,7 @@
     "koa-router": "^10.1.1",
     "koa-static": "^5.0.0",
     "nanoid": "^4.0.0",
+    "nodemon": "^2.0.19",
     "oidc-provider": "^7.11.4",
     "path": "^0.12.7",
     "random-bytes-js": "^1.0.0",
