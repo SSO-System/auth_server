@@ -10,7 +10,7 @@ export default (): { [key: string]: Middleware } => ({
     const client_id = randomByte.randHex(10)
     const client_secret = randomByte.rand64(10)
     return ctx.render("clientRegister", {
-      authServerUrl: "http://localhost:3000", title:"client register", client_id: client_id, client_secret: client_secret
+      authServerUrl: process.env.ISSUER, title:"client register", client_id: client_id, client_secret: client_secret
     });
   },
 
