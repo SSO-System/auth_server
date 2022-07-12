@@ -33,7 +33,6 @@ export const extraClientMetadata = {
 }
 
 export function clientBasedCORS(ctx, origin, client) {
-  console.log('clientBasedCORS');
   // ctx.oidc.route can be used to exclude endpoints from this behaviour, in that case just return
   // true to always allow CORS on them, false to deny
   // you may also allow some known internal origins if you want to
