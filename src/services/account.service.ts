@@ -5,8 +5,14 @@ export const get = async (username: string) => {
     if (doc.empty) {
         return undefined;
     } else {
-        return doc.docs[0].data();
+        const user_info = doc.docs[0].data();
+        user_info.id = doc.docs[0].id;
+        return user_info;
     }
+}
+
+export const update = async (id: string, data: any) => {
+    return await Account.doc(id).update(data);
 }
 
 export const set = async (username: string, value: any) => {
