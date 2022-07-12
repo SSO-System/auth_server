@@ -101,7 +101,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       ctx.req,
       ctx.res
     )) as any;
-    
+
     if (session?.accountId !== undefined) {
       const account = await accountService.get(session.accountId);
       const client_id = params.client_id;
