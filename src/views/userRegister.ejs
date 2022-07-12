@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <%- include('components/head'); -%>
+  <body class="app">
+    <div class="login-card">
+      <h1><%= title %></h1>
+      <form
+        autocomplete="on"
+        action="<%= authServerUrl %>/users"
+        method="post"
+      >
+        <label>Username</label>
+        <input required type="text" name="username" placeholder="username" />
+
+        <label>Password</label>
+        <input
+          required
+          type="password"
+          name="password"
+          placeholder="and password"
+        />
+
+        <label>First name</label>
+        <input
+          required
+          type="text"
+          name="firstName"
+          placeholder="Your first name"
+        />
+        <label>Last name</label>
+        <input
+          required
+          type="text"
+          name="lastName"
+          placeholder="Your last name"
+        />
+        <label>Birth date</label>
+        <input
+          required
+          type="date"
+          name="birthdate"
+          placeholder="Your birth date"
+        />
+        <label for="gender">Gender</label>
+        <select name="gender" class="select__gender">
+          <option value="male">Male</option>
+          <option value="female">female</option>
+
+        </select>
+        <br>
+        <label>Email</label>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="Enter your email address"
+        />
+        <label>Avatar</label>
+        <input type="file" id="myFile" name="filename">
+
+        <button type="submit" class="login login-submit">Register</button>
+      </form>
+    </div>
+  
+  </body>
+</html>
+

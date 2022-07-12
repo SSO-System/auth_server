@@ -10,10 +10,17 @@ export const get = async (username: string) => {
 }
 
 export const set = async (username: string, value: any) => {
+    console.log(value)
     await Account.add({
         username: value.username,
         password: value.password,
-        email: "metalicn20@gmail.com",
-        emailVerified: false,
+        email: value.email,
+        email_verified: true,
+        firstname: value.firstName,
+        lastname: value.lastName,
+        birthdate: value.birthdate,
+        gender: value.gender,
+        picture: "https://firebasestorage.googleapis.com/v0/b/oauth2-c28ca.appspot.com/o/avatar%2Fdefault_picture.jpg?alt=media&token=bbd9a270-6ed9-4e70-92cb-2aa12713439c",
+
     })
 }
