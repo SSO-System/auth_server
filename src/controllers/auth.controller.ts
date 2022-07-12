@@ -144,4 +144,24 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       ctx.throw(501, 'Not implemented.');
     }
   },
+  checkSession: async (ctx) => {
+    if (ctx.query.username !== undefined && ctx.query.client_id !== undefined) {
+      const username = ctx.query.username as string;
+      const client_id = ctx.query.client_id as string;
+      const client = await oidc.Client.find(client_id);
+
+      if (!client) {
+        ctx.throw(400, "Client invalid");
+      }
+      const session = await oidc.Session.get(ctx);
+      console.log(session)
+      if (!session.accountId || session.accountId !== username) {
+        ctx.body = { message: 'changed' }
+      } else {
+        ctx.body = { message: 'unchanged' }
+      }
+    } else {  
+      ctx.throw(400, "Missing Value");
+    }
+  },
 });
