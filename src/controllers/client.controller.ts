@@ -2,34 +2,9 @@
 import { Middleware } from "koa";
 import * as clientService from "../services/client.service";
 import randomByte from "random-bytes-js"
-// import {randomFill} from 'crypto'
-// import { nanoid } from 'nanoid'
-// import base64url from "base64url";
 
 export default (): { [key: string]: Middleware } => ({
  
-//   register: async (ctx) => {
-//     const body = ctx.request.body;
-//     await accountService.set(body.username, {
-//       username: body.username,
-//       password: body.password,
-//     });
-//     ctx.body = { message: "User successfully created"};
-//   },
-
-  // client_id: function idFactory(ctx) {
-  //   return nanoid();
-  // },
-
-  // client_secret:   async function secretFactory(ctx) {
-  //   const bytes = Buffer.allocUnsafe(64);
-  //   await randomFill(bytes, (err, buf) => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //   });
-  //   return base64url(bytes);
-  // },
 
   client_form: async (ctx) => {
     const client_id = randomByte.randHex(10)

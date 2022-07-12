@@ -36,12 +36,38 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
       });
     }
   },
+  registerForm: async (ctx) => {
+    console.log("registerForm")
+    return ctx.render('userRegister', {
+      title: 'User Registration', 
+      authServerUrl: process.env.ISSUER
+    })
+  },
+
   register: async (ctx) => {
+    console.log("hwea")
+    const err = {}
     const body = ctx.request.body;
-    await accountService.set(body.username, {
-      username: body.username,
-      password: body.password,
-    });
+    const user = await accountService.get(body.username);
+    if(user)
+    {
+      console.log("user already exists")
+      return ctx.render('userRegister', {
+        title: 'User Registration', 
+        authServerUrl: process.env.ISSUER
+      })
+    }
+    // const newUser = {
+    //   username: body.username,
+    //   password: body.password,
+    //   firstname: body.firstname,
+    //   lastname: body.lastname,
+    //   email: body.email,
+    //   gender: body.gender,
+    //   birthdate: body.birthdate
+    // }
+    await accountService.set(body.username, body);
+    console.log(body);
     ctx.body = { message: 'User successfully created'};
   },
 
@@ -117,6 +143,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
     }
 
     if (prompt.name === 'login') {
+      // console.log("login")
       return ctx.render('login', {
         uid,
         details: prompt.details,
