@@ -20,7 +20,7 @@ export const interaction = (oidc) => async (ctx) => {
       const account = await accountService.get(session.accountId);
       const client_id = params.client_id;
       
-      if (!account.allow_client.includes(client_id)) {        
+      if (!account.allow_client || !account.allow_client.includes(client_id)) {        
         return ctx.render('access_denied', {
           authUrl: process.env.ISSUER,
           title: 'Access Denied',
