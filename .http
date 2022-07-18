@@ -1,0 +1,20 @@
+POST http://localhost:3000/auth 
+Content-Type: application/x-www-form-urlencoded
+
+client_id=app&resource=http://localhost:3006/pi&response_type=code&redirect_uri=http://localhost:3005/cb&scope=openid offline_access api:read&prompt=consent&code_challenge=cPfVx67PboBfthJ66d6_G81LVMAVW9k7pRemK9lVJTk&code_challenge_method=S256
+###
+POST http://localhost:3000/auth 
+Content-Type: application/x-www-form-urlencoded
+
+client_id=app&response_type=code&redirect_uri=http://localhost:3005/cb&prompt=consent&code_challenge=cPfVx67PboBfthJ66d6_G81LVMAVW9k7pRemK9lVJTk&code_challenge_method=S256
+
+# {
+#     "client_id": "app",
+#     "resourse": "http://localhost:3006/pi",
+#     "response_type": "code",
+#     "redirect_uri": "http://localhost:3005/cb",
+#     "scope": "openid offline_access api:read",
+#     "prompt": "consent",
+#     "code_challenge": "cPfVx67PboBfthJ66d6_G81LVMAVW9k7pRemK9lVJTk",
+#     "code_challenge_method": "S256",
+# }
