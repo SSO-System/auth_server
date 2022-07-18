@@ -2,12 +2,13 @@
 <html>
   <%- include('components/head'); -%>
   <body>
-    <div class="login-card">
-      <h1><%= title %></h1>
+    <div class="login-card ">
+      <h1 id="title"><%= title %></h1>
       <form
         autocomplete="off"
         action="/interaction/<%= uid %>/login"
         method="post"
+        id="loginForm"
       >
         <input
           required
@@ -26,13 +27,136 @@
 
         <button type="submit" class="login login-submit">Sign-in</button>
       </form>
+      
+      <form
+        autocomplete="on"
+        action="/interaction/<%= uid %>/register"
+        method="post"
+        id="registerForm"
+        class="hide"
+      >
+        <label>Username</label>
+        <input
+          required
+          type="text"
+          name="username"
+          placeholder="username"
+          id="username"
+        />
+
+        <label>Password</label>
+        <input
+          required
+          type="password"
+          name="password"
+          placeholder="and password"
+          id="password"
+        />
+
+        <label>First name</label>
+        <input
+          required
+          type="text"
+          name="firstname"
+          placeholder="Your first name"
+          id="firstName"
+        />
+        <label>Last name</label>
+        <input
+          required
+          type="text"
+          name="lastname"
+          placeholder="Your last name"
+          id="lastName"
+        />
+        <label>Birth date</label>
+        <input
+          required
+          type="date"
+          name="birthdate"
+          placeholder="Your birth date"
+          id="birthdate"
+        />
+        <label for="gender">Gender</label>
+        <select name="gender" class="select__gender" id="gender">
+          <option value="male">Male</option>
+          <option value="female">female</option>
+        </select>
+        <br />
+        <label>Email</label>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="Enter your email address"
+          id="email"
+        />
+
+        <button type="submit" class="login login-submit">Register</button>
+      </form>
+
       <div class="login-help">
         <a href="/interaction/<%= uid %>/abort">[ Cancel ]</a>
       </div>
-      <div class="signUp">
-        <p>Do you have an account <a href="/register">Sign up</a></p>
+      <div class="extra">
+        <p>
+          Do you have an account?
+          <span onclick="changeForm()" id="form-control-text"
+            >Sign-up</span
+          >
+      
+          <!-- <a href="/interaction/<%= uid %>/register1">sign-up2</a> -->
+        </p>
       </div>
     </div>
-    <!-- <%- include('components/footer'); -%> -->
+    <%- include('components/footer'); -%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      // var formType = "<%= title %>";
+      var title = document.getElementById("title").textContent;
+      console.log(title)
+      function changeForm() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const text = document.getElementById("form-control-text");
+        if(title.toLocaleLowerCase() === "sign-in"){
+          title = "Register"
+          text.innerText = "log-in"
+        }
+        else {
+          text.innerText = "Sign-up";
+          title = "Sign-In"
+        }
+        document.getElementById("title").innerHTML = title;
+        document.getElementsByTagName("BODY")[0].classList.toggle('app')
+        loginForm.classList.toggle("hide")
+        registerForm.classList.toggle("hide")
+
+      }
+      $(document).ready(function () {
+        $("#registerForm").submit(function (e) {
+          e.preventDefault();
+          const data = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+          };
+          $.ajax({
+            method: "POST",
+            data,
+            url: "<%= authServerUrl %>/checkRegister",
+            dataType: "json",
+          }).done(function (res) {
+            if (res.message === "user already exists") {
+              console.log("error here");
+              console.log({ err: res.message });
+            } else {
+              alert("register successful");
+              e.currentTarget.submit();
+              console.log("end res");
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>

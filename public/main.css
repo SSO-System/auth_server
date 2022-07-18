@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
 
+* {
+  transition: all .6s ease-in;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   margin-top: 25px;
@@ -42,7 +46,7 @@ body.app {
 
 .login-card input:not(#grant),
 .login-card .select__grant, .login-card .select__gender {
-  height: 44px;
+  height: 38px;
   font-size: 16px;
   width: 100%;
   margin-bottom: 10px;
@@ -52,6 +56,10 @@ body.app {
   padding: 0 8px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+.hide {
+  display: none;
 }
 
 #uri__input,
@@ -112,7 +120,22 @@ body.app {
 .login-card input[type="checkbox"] {
   margin-bottom: 10px;
 }
+.extra {
+  color: #666;
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+}
 
+#form-control-text {
+  color: black;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+
+
+}
 .addIcon {
   position: absolute;
   top: 26px;
