@@ -19,14 +19,17 @@ export const login = (oidc) => async (ctx) => {
             accountId: ctx.request.body.username,
           },
         };
+        const redirectTo = await oidc.interactionResult(ctx.req, ctx.res, result);
+
+        ctx.body = { redirectTo };
+
       } else {
         result = {
           error: 'access_denied',
           error_description: 'Username or password is incorrect.',
         };
+        ctx.body = result;
       }
-      return oidc.interactionFinished(ctx.req, ctx.res, result, {
-        mergeWithLastSubmission: false,
-      });
+      
     }
 }

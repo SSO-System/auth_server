@@ -10,8 +10,10 @@
         method="post"
         id="loginForm"
       >
+
         <input
           required
+          id="name"
           type="text"
           name="username"
           placeholder="Username"
@@ -19,13 +21,15 @@
         />
         <input
           required
+          id="password"
           type="password"
           name="password"
           placeholder="Password"
           value=""
         />
 
-        <button type="submit" class="login login-submit" onclick="onLogin()">Sign-in</button>
+        <p id="message" style="font-size: 11px; color: red; margin-top: 0px;"></p>
+        <button type="submit" class="login login-submit" onclick="onLogin();">Sign-in</button>
       </form>
       
       <form
@@ -98,6 +102,7 @@
       <div class="login-help">
         <a href="/interaction/<%= uid %>/abort">[ Cancel ]</a>
       </div>
+      
       <div class="extra">
         <p>
           Do you have an account?
