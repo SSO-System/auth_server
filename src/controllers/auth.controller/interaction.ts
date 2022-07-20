@@ -11,10 +11,12 @@ function debug(obj: any) {
 }
 
 export const interaction = (oidc) => async (ctx) => {
-    const { uid, prompt, params, session } = (await oidc.interactionDetails(
-      ctx.req,
-      ctx.res
+ 
+  const { uid, prompt, params, session } = (await oidc.interactionDetails(
+    ctx.req,
+    ctx.res
     )) as any;
+    
     
     if (session?.accountId !== undefined) {
       const account = await accountService.get(session.accountId);
@@ -41,6 +43,7 @@ export const interaction = (oidc) => async (ctx) => {
           params: debug(params),
           prompt: debug(prompt),
         },
+        authServerUrl: process.env.ISSUER,
       });
     } else if (prompt.name === 'consent') {
       if (session.accountId) {
@@ -61,7 +64,7 @@ export const interaction = (oidc) => async (ctx) => {
           }
         }
         
-      } 
+      }
 
       return ctx.render('consent', {
         uid,

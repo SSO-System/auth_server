@@ -6,11 +6,18 @@
       <h1><%= title %></h1>
       <form
         autocomplete="on"
-        action="<%= authServerUrl %>/users"
+        action="/interaction/<%= uid %>/register"
         method="post"
+        id="userForm"
       >
         <label>Username</label>
-        <input required type="text" name="username" placeholder="username" />
+        <input
+          required
+          type="text"
+          name="username"
+          placeholder="username"
+          id="username"
+        />
 
         <label>Password</label>
         <input
@@ -18,6 +25,7 @@
           type="password"
           name="password"
           placeholder="and password"
+          id="password"
         />
 
         <label>First name</label>
@@ -26,6 +34,7 @@
           type="text"
           name="firstName"
           placeholder="Your first name"
+          id="firstName"
         />
         <label>Last name</label>
         <input
@@ -33,6 +42,7 @@
           type="text"
           name="lastName"
           placeholder="Your last name"
+          id="lastName"
         />
         <label>Birth date</label>
         <input
@@ -40,28 +50,54 @@
           type="date"
           name="birthdate"
           placeholder="Your birth date"
+          id="birthdate"
         />
         <label for="gender">Gender</label>
-        <select name="gender" class="select__gender">
+        <select name="gender" class="select__gender" id="gender">
           <option value="male">Male</option>
           <option value="female">female</option>
-
         </select>
-        <br>
+        <br />
         <label>Email</label>
         <input
           required
           type="email"
           name="email"
           placeholder="Enter your email address"
+          id="email"
         />
-        <label>Avatar</label>
-        <input type="file" id="myFile" name="filename">
 
         <button type="submit" class="login login-submit">Register</button>
       </form>
     </div>
-  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      
+
+      $(document).ready(function () {
+        $("#userForm").submit( function (e) {
+          e.preventDefault();
+          const data = {
+          username: $("#username").val(),
+          password: $("#password").val(),
+        };
+        $.ajax({
+          method: "POST",
+          data,
+          url: "<%= authServerUrl %>/checkRegister",
+          dataType: "json",
+        }).done(function (res) {
+          if (res.message === "user already exists") {
+            console.log("error here");
+            console.log({ err: res.message });
+          } else {
+            alert("register successful");
+            e.currentTarget.submit();
+            console.log("end res");
+          }
+        });
+        });
+      });
+    </script>
   </body>
 </html>
-

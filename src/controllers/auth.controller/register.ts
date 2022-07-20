@@ -1,27 +1,109 @@
-import * as accountService from '../../services/account.service';
+import * as accountService from "../../services/account.service";
+import axios from "axios";
+
+import nodemailer from "nodemailer";
+
+function sendMailValidate() {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "dangluan15112001@gmail.com",
+      pass: "xsisifbvehjbtsfx",
+    },
+  });
+  const userEmail = "luan.dangluan.dang@hcmut.edu.vn";
+  const userName = "giacat"
+  var mailOptions = {
+    from: "dangluan15112001@gmail.com",
+    to: userEmail,
+    subject: "Welcome new user...",
+    html: `<h1>Welcome</h1>
+    <a href="http://localhost:3000/verifyEmail?username=${userName}">Click to verify your email</a>`,
+  };
+  
+  var sendMailFun = (mailOptions) => {
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  };
+  sendMailFun(mailOptions)
+}
+
+
+
+function debug(obj: any) {
+  return Object.entries(obj)
+    .map(
+      (ent: [string, any]) =>
+        `<strong>${ent[0]}</strong>: ${JSON.stringify(ent[1])}`
+    )
+    .join("<br>");
+}
+
+export const checkRegister = (oidc) => async (ctx) => {
+  const body = ctx.request.body;
+  console.log("checkRegister", body);
+
+  const user = await accountService.get(body.username);
+  ctx.response.status = 200;
+
+  if (user) {
+    console.log("user already exists");
+    return (ctx.body = { message: "user already exists" });
+  } else {
+    return (ctx.body = { message: "success" });
+  }
+  //  ctx.response.message = {data: 1}
+};
 
 export const register = (oidc) => async (ctx) => {
-  const err = {}
   const body = ctx.request.body;
-  const user = await accountService.get(body.username);
-  if(user)
-  {
-    console.log("user already exists")
-    return ctx.render('userRegister', {
-      title: 'User Registration', 
-      authServerUrl: process.env.ISSUER
-    })
-  }
-  // const newUser = {
-  //   username: body.username,
-  //   password: body.password,
-  //   firstname: body.firstname,
-  //   lastname: body.lastname,
-  //   email: body.email,
-  //   gender: body.gender,
-  //   birthdate: body.birthdate
-  // }
-  await accountService.set(body.username, body);
-  console.log(body);
-  ctx.body = { message: 'User successfully created'};
-}
+  const newUserInfoToClient = body;
+  delete newUserInfoToClient.password;
+  console.log(newUserInfoToClient);
+
+  // await accountService.set(body.username, body);
+  const {
+    uid,
+    prompt,
+    params: { redirect_uri },
+    session,
+    params,
+  } = (await oidc.interactionDetails(ctx.req, ctx.res)) as any;
+
+  const uriRegister = redirect_uri.replace("login_callback", "register");
+  axios({
+    method: "post",
+    url: uriRegister,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: body
+  });
+  let result: any;
+  result = {
+    login: {
+      accountId: body.username,
+    },
+  };
+
+  ctx.status = 200;
+
+  console.log("login request");
+  return ctx.render("login", {
+    uid,
+    details: prompt.details,
+    params,
+    session: session ? debug(session) : undefined,
+    title: "Sign-In",
+    dbg: {
+      params: debug(params),
+      prompt: debug(prompt),
+    },
+    authServerUrl: process.env.ISSUER,
+  });
+};
