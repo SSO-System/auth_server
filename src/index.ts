@@ -9,7 +9,6 @@ import path from "path";
 import { configuration } from "./configs/provider_configuration";
 import { oidc } from "./configs/provider";
 import router from "./routes";
-import { initializeOIDCModel } from "./db/firestore/connection";
 import { promisify } from "util";
 
 dotenv.config({ path: path.resolve(".env") });
@@ -62,8 +61,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const start = async () => {
-  await initializeOIDCModel();
-  
   const provider = oidc(process.env.ISSUER as string, configuration);
 
   app.use(koaStatic(path.resolve("public")));

@@ -54,8 +54,8 @@ export const interaction = (oidc) => async (ctx) => {
             if (missing_scope.length === 0) {
               try {
                 return await confirmInteraction(oidc)(ctx);
-              } catch (e) {
-                console.log(e);
+              } catch (e: any) {
+                console.log(e.message);
               } 
             }
           }

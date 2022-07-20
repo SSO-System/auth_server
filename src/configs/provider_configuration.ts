@@ -1,5 +1,4 @@
 import { Configuration } from "oidc-provider";
-import { FirestoreAdapter } from '../adapters/firestore';
 import { findAccount } from "./provider_configs/findAccount";
 import { clientBasedCORS, extraClientMetadata } from './provider_configs/clientBasedCors';
 import { claims } from './provider_configs/claims';
@@ -8,6 +7,7 @@ import { jwks } from "./provider_configs/jwks";
 import { ttl } from "./provider_configs/ttl";
 import { scopes } from "./provider_configs/scopes";
 import { renderError } from "./provider_configs/renderError";
+import { PostgresAdapter } from "../adapters/postgres";
 
 export const configuration: Configuration = {
   extraClientMetadata,
@@ -19,11 +19,11 @@ export const configuration: Configuration = {
   features,
   jwks,
   ttl,
-  adapter: FirestoreAdapter,
+  adapter: PostgresAdapter,
   clients: [
     // Dynamic Clients
   ],
   cookies: {
-    keys: ["subzero"],
+    keys: [`${process.env.COOKIE_SECRET}`],
   },
 };
