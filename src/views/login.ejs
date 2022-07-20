@@ -27,6 +27,7 @@
           placeholder="Password"
           value=""
         />
+
         <p id="message" style="font-size: 11px; color: red; margin-top: 0px;"></p>
         <button type="submit" class="login login-submit" onclick="onLogin();">Sign-in</button>
       </form>
@@ -95,7 +96,7 @@
           id="email"
         />
 
-        <button type="submit" class="login login-submit">Register</button>
+        <button type="submit" class="login login-submit" >Register</button>
       </form>
 
       <div class="login-help">
@@ -161,7 +162,11 @@
           });
         });
       });
-      
+
+
+
+
+
       async function onLogin() {        
         document.getElementById('name').style.border = '1px solid #d9d9d9';
         document.getElementById('name').style.borderTop = '1px solid #c0c0c0';
@@ -195,6 +200,5 @@
         }
       }
     </script>
-
   </body>
 </html>

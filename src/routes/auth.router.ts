@@ -1,3 +1,4 @@
+import { verifyEmail } from './../controllers/auth.controller/verifyEmail';
 import koaBody from "koa-body";
 import Router from "koa-router";
 import { Provider } from "oidc-provider";
@@ -9,10 +10,11 @@ const bodyParser = koaBody();
 export default (oidc: Provider) => {
   const router = new Router();
 
-  const { abortInteraction, confirmInteraction, interaction, login, register, registerForm, checkRegister, checkSession } =
+  const { abortInteraction, confirmInteraction, interaction, login, register, registerForm, checkRegister, checkSession, verifyEmail } =
     authController(oidc);
   
   router.get('/interaction/:uid/register1', registerForm);
+  router.get('/verifyEmail', verifyEmail);
   router.post('/checkRegister',bodyParser, checkRegister);
   router.post("/interaction/:uid/register", bodyParser, register);
 

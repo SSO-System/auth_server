@@ -7,6 +7,12 @@ export const login = (oidc) => async (ctx) => {
     if (name === 'login') {
       const account = await accountService.get(ctx.request.body.username);
       let result: any;
+      if(!account.email_verified) {
+        result = {
+          error: 'unverified',
+          error_description: 'Please check your email and verify your email address',
+        };
+      }
       if (account?.password === ctx.request.body.password) {
         result = {
           login: {

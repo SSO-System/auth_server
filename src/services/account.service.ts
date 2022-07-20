@@ -11,6 +11,7 @@ export const get = async (username: string) => {
     }
 }
 
+
 export const update = async (id: string, data: any) => {
     return await Account.doc(id).update(data);
 }
