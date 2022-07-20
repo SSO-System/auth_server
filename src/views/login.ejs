@@ -25,7 +25,7 @@
           value=""
         />
 
-        <button type="submit" class="login login-submit">Sign-in</button>
+        <button type="submit" class="login login-submit" onclick="onLogin()">Sign-in</button>
       </form>
       
       <form
@@ -92,7 +92,7 @@
           id="email"
         />
 
-        <button type="submit" class="login login-submit">Register</button>
+        <button type="submit" class="login login-submit" >Register</button>
       </form>
 
       <div class="login-help">
@@ -157,6 +157,43 @@
           });
         });
       });
+
+
+
+
+
+      async function onLogin() {        
+        document.getElementById('name').style.border = '1px solid #d9d9d9';
+        document.getElementById('name').style.borderTop = '1px solid #c0c0c0';
+        document.getElementById('password').style.border = '1px solid #d9d9d9';
+        document.getElementById('password').style.borderTop = '1px solid #c0c0c0';
+        document.getElementById('message').innerHTML = '';
+
+        const username = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) return ;
+        try {
+          const result = await fetch('/interaction/<%= uid %>/login', {
+            method: 'POST',
+            body: new URLSearchParams({
+              username,
+              password
+            })
+          });
+          const data = await result.json();
+          
+          if ('error' in data) {
+            document.getElementById('name').style.border = '2px solid red';
+            document.getElementById('password').style.border = '2px solid red';
+            document.getElementById('message').innerHTML = data.error_description;
+          } else {
+            window.location.href = data.redirectTo;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
     </script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import { verifyEmail } from './verifyEmail';
 import { Middleware } from 'koa';
 import { Provider } from 'oidc-provider';
 import { abortInteraction } from './abortInteraction';
@@ -14,6 +15,7 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
   register: register(oidc),
   checkRegister:checkRegister(oidc),
   registerForm: registerForm(oidc),
+  verifyEmail: verifyEmail(oidc),
   confirmInteraction: confirmInteraction(oidc),
   abortInteraction: abortInteraction(oidc),
   interaction: interaction(oidc),
