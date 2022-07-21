@@ -21,5 +21,4 @@ export default (oidc: Provider): { [key: string]: Middleware } => ({
   abortInteraction: abortInteraction(oidc),
   interaction: interaction(oidc),
   checkSession: checkSession(oidc),
-  registerForm: registerForm(oidc),
 });
