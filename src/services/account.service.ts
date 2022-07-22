@@ -57,14 +57,16 @@ export const set = async (username: string, value: any) => {
         value.password,
         value.email,
         false,
-        value.firstName,
-        value.lastName,
+        value.first_name,
+        value.last_name,
         value.birthdate,
         value.gender,
         "https://firebasestorage.googleapis.com/v0/b/oauth2-c28ca.appspot.com/o/avatar%2Fdefault_picture.jpg?alt=media&token=bbd9a270-6ed9-4e70-92cb-2aa12713439c",
     ];
+    console.log("value", value);
+    console.log("data", data);
     try {
-        return await db.query(`INSERT oidc_account(username, password, email, email_verified, first_name, last_name, birthdate, gender, picture)
+        return await db.query(`INSERT INTO oidc_account(username, password, email, email_verified, first_name, last_name, birthdate, gender, picture)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, data);
     } catch (e: any) {
         console.log(e.message);

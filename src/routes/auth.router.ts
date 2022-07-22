@@ -1,4 +1,4 @@
-import { verifyEmail } from './../controllers/auth.controller/verifyEmail';
+// import { verifyEmail } from './../controllers/auth.controller/verifyEmail';
 import koaBody from "koa-body";
 import Router from "koa-router";
 import { Provider } from "oidc-provider";

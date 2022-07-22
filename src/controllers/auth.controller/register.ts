@@ -3,7 +3,7 @@ import axios from "axios";
 
 import nodemailer from "nodemailer";
 
-function sendMailValidate() {
+function sendMailValidate(newUser) {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -11,14 +11,14 @@ function sendMailValidate() {
       pass: "xsisifbvehjbtsfx",
     },
   });
-  const userEmail = "luan.dangluan.dang@hcmut.edu.vn";
-  const userName = "giacat"
+  console.log("new user", newUser);
+
   var mailOptions = {
     from: "dangluan15112001@gmail.com",
-    to: userEmail,
+    to: newUser.email,
     subject: "Welcome new user...",
     html: `<h1>Welcome</h1>
-    <a href="http://localhost:3000/verifyEmail?username=${userName}">Click to verify your email</a>`,
+    <a href="http://localhost:3000/verifyEmail?username=${newUser.username}">Click to verify your email</a>`,
   };
   
   var sendMailFun = (mailOptions) => {
@@ -62,11 +62,12 @@ export const checkRegister = (oidc) => async (ctx) => {
 
 export const register = (oidc) => async (ctx) => {
   const body = ctx.request.body;
-  const newUserInfoToClient = body;
-  delete newUserInfoToClient.password;
-  console.log(newUserInfoToClient);
-
-  // await accountService.set(body.username, body);
+ 
+  // save new user information
+  await accountService.set(body.username, body);
+  // send email verify mail 
+  const emailVerifiedInfo = {email: body.email, username: body.username}
+  sendMailValidate(emailVerifiedInfo)
   const {
     uid,
     prompt,
@@ -74,16 +75,17 @@ export const register = (oidc) => async (ctx) => {
     session,
     params,
   } = (await oidc.interactionDetails(ctx.req, ctx.res)) as any;
-
-  const uriRegister = redirect_uri.replace("login_callback", "register");
-  axios({
-    method: "post",
-    url: uriRegister,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    data: body
-  });
+  // const newUserInfoToClient = body;
+  // delete newUserInfoToClient.password;
+  // const uriRegister = redirect_uri.replace("login_callback", "register");
+  // axios({
+  //   method: "post",
+  //   url: uriRegister,
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  //   data: new URLSearchParams(newUserInfoToClient)
+  // });
   let result: any;
   result = {
     login: {

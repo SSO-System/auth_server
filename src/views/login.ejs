@@ -59,7 +59,7 @@
         <input
           required
           type="text"
-          name="firstname"
+          name="first_name"
           placeholder="Your first name"
           id="firstName"
         />
@@ -67,7 +67,7 @@
         <input
           required
           type="text"
-          name="lastname"
+          name="last_name"
           placeholder="Your last name"
           id="lastName"
         />
@@ -149,8 +149,8 @@
             dataType: "json",
           }).done(function (res) {
             if (res.message === "user already exists") {
-              console.log("error here");
-              console.log({ err: res.message });
+              
+              alert(res.message)
             } else {
               alert("Register successful");
               e.currentTarget.submit();
