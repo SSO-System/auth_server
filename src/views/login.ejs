@@ -7,9 +7,10 @@
       <form
         autocomplete="off"
         id="loginForm"
-        onsubmit="return false;"
+        action="/interaction/<%= uid %>/login"
+        method="post"
       >
-
+        <p id="message"> <%= message %> </p>
         <input
           required
           id="name"
@@ -26,9 +27,7 @@
           placeholder="Password"
           value=""
         />
-
-        <p id="message" style="font-size: 11px; color: red; margin-top: 0px;"></p>
-        <button type="submit" class="login login-submit" onclick="onLogin();">Sign-in</button>
+        <button type="submit" class="login login-submit">Sign-in</button>
       </form>
       
       <form
@@ -113,7 +112,6 @@
         </p>
       </div>
     </div>
-    <%- include('components/footer'); -%>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -161,38 +159,9 @@
           });
         });
       });
-      
-      async function onLogin() {        
-        document.getElementById('name').style.border = '1px solid #d9d9d9';
-        document.getElementById('name').style.borderTop = '1px solid #c0c0c0';
-        document.getElementById('pass').style.border = '1px solid #d9d9d9';
-        document.getElementById('pass').style.borderTop = '1px solid #c0c0c0';
-        document.getElementById('message').innerHTML = '';
 
-        const username = document.getElementById('name').value;
-        const password = document.getElementById('pass').value;
-
-        if (!username || !password) return ;
-        try {
-          const result = await fetch('/interaction/<%= uid %>/login', {
-            method: 'POST',
-            body: new URLSearchParams({
-              username,
-              password
-            })
-          });
-          const data = await result.json();
-          
-          if ('error' in data) {
-            document.getElementById('name').style.border = '2px solid red';
-            document.getElementById('pass').style.border = '2px solid red';
-            document.getElementById('message').innerHTML = data.error_description;
-          } else {
-            window.location.href = data.redirectTo;
-          }
-        } catch (e) {
-          console.log(e.message);
-        }
+      if ('<%= message %>' !== '') {
+        document.getElementById('message').style = "color: #c20707; border: 1px solid #de7575; background-color: ##fdf6f6; padding: 10px;"
       }
     </script>
   </body>
