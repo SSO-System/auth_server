@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <%- include('components/head'); -%>
+  <body>
+    <div class="login-card" style="width: 500px; text-align: center;">
+      <h1><%= title %></h1>
+      <form
+        autocomplete="off"
+        onsubmit="return false;"
+      >
+        <p> Enter the verification code displayed in Google Authenticator.
+        </p>
+        <img src="https://firebasestorage.googleapis.com/v0/b/oauth2-c28ca.appspot.com/o/mfa.jpg?alt=media&token=d3864bb2-2cb8-43b9-b154-a1f1684c30ec" width="400px" height="100%" style="margin-bottom: 20px;"/>
+        <p for="verification_code" style="color: gray; text-align: left; font-size: 12px;"> Verification Code </p>
+        <input required id="verification_code" type="text" placeholder="Verification Code" name="verification_code"/>
+        <p id="response_message" style="color: red; text-align: left; font-size: 12px; margin-top: 0px;"> </p>
+        <button type="button" 
+                onclick="onCancel();"
+                style="display: inline-block; 
+                        width: 49%; 
+                        background-color: gray;
+                        border-radius: 3px;
+                        padding: 10px;
+                        border: 0px;
+                        color: white;">Cancel</button>
+        <button type="button"
+                onclick="onSubmit();" 
+                style="display: inline-block; 
+                        width: 49%; 
+                        background-color: #4d90fe;
+                        border-radius: 3px;
+                        padding: 10px;
+                        border: 0px;
+                        color:white;">Verify</button>
+      </form>
+    </div>
+    <script>
+        document.getElementById('verification_code').addEventListener('input', function () {
+            document.getElementById('response_message').innerHTML = '';
+            document.getElementById('verification_code').style = "border: 1px solid black;"
+        })
+
+        function onCancel() {
+            window.location.href = "/interaction/<%= uid %>/abort";
+        }
+
+        async function onSubmit() {
+            const data = {
+                username: '<%= username %>',
+                verification_code: document.getElementById('verification_code').value,
+            }
+
+            const result = await fetch('/interaction/<%= uid %>/mfa', {
+                method: 'POST',
+                body: new URLSearchParams(data),
+            });
+            const response = await result.json();
+
+            if ('error' in response) {
+                document.getElementById('response_message').innerHTML = response.error_description;
+                document.getElementById('verification_code').style = "border: 1px solid red;"
+                console.log(response.error_description);
+            } else {
+                window.location.href = response.redirectTo;
+            } 
+        }
+    </script>
+  </body>
+</html>

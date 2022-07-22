@@ -37,6 +37,7 @@ export const interaction = (oidc) => async (ctx) => {
         uid,
         details: prompt.details,
         params,
+        message: '',
         session: session ? debug(session) : undefined,
         title: 'Sign-In',
         dbg: {
