@@ -6,9 +6,8 @@
       <h1 id="title"><%= title %></h1>
       <form
         autocomplete="off"
-        action="/interaction/<%= uid %>/login"
-        method="post"
         id="loginForm"
+        onsubmit="return false;"
       >
 
         <input
@@ -21,7 +20,7 @@
         />
         <input
           required
-          id="password"
+          id="pass"
           type="password"
           name="password"
           placeholder="Password"
@@ -105,8 +104,8 @@
       
       <div class="extra">
         <p>
-          Do you have an account?
-          <span onclick="changeForm()" id="form-control-text"
+          Do you have an account ? 
+          <span style="font-size: 0.9rem; font-style: italic;" onclick="changeForm()" id="form-control-text"
             >Sign-up</span
           >
       
@@ -115,18 +114,18 @@
       </div>
     </div>
     <%- include('components/footer'); -%>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
       // var formType = "<%= title %>";
       var title = document.getElementById("title").textContent;
-      console.log(title)
       function changeForm() {
         const loginForm = document.getElementById("loginForm");
         const registerForm = document.getElementById("registerForm");
         const text = document.getElementById("form-control-text");
         if(title.toLocaleLowerCase() === "sign-in"){
           title = "Register"
-          text.innerText = "log-in"
+          text.innerText = "Sign-in"
         }
         else {
           text.innerText = "Sign-up";
@@ -155,7 +154,7 @@
               
               alert(res.message)
             } else {
-              alert("register successful");
+              alert("Register successful");
               e.currentTarget.submit();
               console.log("end res");
             }
@@ -166,12 +165,12 @@
       async function onLogin() {        
         document.getElementById('name').style.border = '1px solid #d9d9d9';
         document.getElementById('name').style.borderTop = '1px solid #c0c0c0';
-        document.getElementById('password').style.border = '1px solid #d9d9d9';
-        document.getElementById('password').style.borderTop = '1px solid #c0c0c0';
+        document.getElementById('pass').style.border = '1px solid #d9d9d9';
+        document.getElementById('pass').style.borderTop = '1px solid #c0c0c0';
         document.getElementById('message').innerHTML = '';
 
         const username = document.getElementById('name').value;
-        const password = document.getElementById('password').value;
+        const password = document.getElementById('pass').value;
 
         if (!username || !password) return ;
         try {
@@ -186,7 +185,7 @@
           
           if ('error' in data) {
             document.getElementById('name').style.border = '2px solid red';
-            document.getElementById('password').style.border = '2px solid red';
+            document.getElementById('pass').style.border = '2px solid red';
             document.getElementById('message').innerHTML = data.error_description;
           } else {
             window.location.href = data.redirectTo;
