@@ -35,6 +35,6 @@ export const login = (oidc) => async (ctx) => {
         const redirectTo = await oidc.interactionResult(ctx.req, ctx.res, result);
         ctx.body = { redirectTo };
       }
-      
+
     }
 }

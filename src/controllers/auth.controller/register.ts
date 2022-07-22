@@ -1,5 +1,4 @@
 import * as accountService from "../../services/account.service";
-import axios from "axios";
 
 import nodemailer from "nodemailer";
 
@@ -18,9 +17,9 @@ function sendMailValidate(newUser) {
     to: newUser.email,
     subject: "Welcome new user...",
     html: `<h1>Welcome</h1>
-    <a href="http://localhost:3000/verifyEmail?username=${newUser.username}">Click to verify your email</a>`,
+    <a href="http://localhost:3000/verifyEmail?username=${newUser.username}&uriRegister=${newUser.uriRegister}">Click to verify your email</a>`,
   };
-  
+
   var sendMailFun = (mailOptions) => {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -30,10 +29,8 @@ function sendMailValidate(newUser) {
       }
     });
   };
-  sendMailFun(mailOptions)
+  sendMailFun(mailOptions);
 }
-
-
 
 function debug(obj: any) {
   return Object.entries(obj)
@@ -62,12 +59,6 @@ export const checkRegister = (oidc) => async (ctx) => {
 
 export const register = (oidc) => async (ctx) => {
   const body = ctx.request.body;
- 
-  // save new user information
-  await accountService.set(body.username, body);
-  // send email verify mail 
-  const emailVerifiedInfo = {email: body.email, username: body.username}
-  sendMailValidate(emailVerifiedInfo)
   const {
     uid,
     prompt,
@@ -75,17 +66,16 @@ export const register = (oidc) => async (ctx) => {
     session,
     params,
   } = (await oidc.interactionDetails(ctx.req, ctx.res)) as any;
-  // const newUserInfoToClient = body;
-  // delete newUserInfoToClient.password;
-  // const uriRegister = redirect_uri.replace("login_callback", "register");
-  // axios({
-  //   method: "post",
-  //   url: uriRegister,
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   },
-  //   data: new URLSearchParams(newUserInfoToClient)
-  // });
+  const uriRegister = redirect_uri.replace("login_callback", "register");
+
+  // save new user information
+  await accountService.set(body.username, body);
+  // send email verify mail
+  const emailVerifiedInfo = { email: body.email, username: body.username, uriRegister: uriRegister };
+  sendMailValidate(emailVerifiedInfo);
+
+
+
   let result: any;
   result = {
     login: {
