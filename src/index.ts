@@ -66,6 +66,7 @@ const start = async () => {
   app.use(koaStatic(path.resolve("public")));
   app.use(router(provider).routes());
   app.use(mount(provider.app));
+  app.use(cors());
 
   app.listen(PORT, () => {
     console.log(

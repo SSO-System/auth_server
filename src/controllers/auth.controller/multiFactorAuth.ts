@@ -2,6 +2,7 @@ import * as accountService from "../../services/account.service";
 import totp from "totp-generator";
 
 export const multiFactorAuth = (oidc) => async (ctx) => {
+
     if (!ctx.request.body.username || !ctx.request.body.verification_code) {
         const result = {
             error: "access_denied",
@@ -31,3 +32,5 @@ export const multiFactorAuth = (oidc) => async (ctx) => {
         }
     }
 };
+
+

@@ -11,6 +11,7 @@
         <p> Enter the verification code displayed in Google Authenticator.
         </p>
         <img src="https://firebasestorage.googleapis.com/v0/b/oauth2-c28ca.appspot.com/o/mfa.jpg?alt=media&token=d3864bb2-2cb8-43b9-b154-a1f1684c30ec" width="400px" height="100%" style="margin-bottom: 20px;"/>
+        <img src="<%= qrImage %>" alt="" id="qrCode">
         <p for="verification_code" style="color: gray; text-align: left; font-size: 12px;"> Verification Code </p>
         <input required id="verification_code" type="text" placeholder="Verification Code" name="verification_code"/>
         <p id="response_message" style="color: red; text-align: left; font-size: 12px; margin-top: 0px;"> </p>
@@ -43,6 +44,16 @@
         function onCancel() {
             window.location.href = "/interaction/<%= uid %>/abort";
         }
+        
+        async function fetchQr() {
+          
+            console.log(document.cookie)
+
+          // document.getElementById('qrCode').src = qrImage;
+
+        }
+
+        fetchQr();
 
         async function onSubmit() {
             const data = {
