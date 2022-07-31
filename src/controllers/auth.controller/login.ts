@@ -7,7 +7,6 @@ export const login = (oidc) => async (ctx) => {
   } = await oidc.interactionDetails(ctx.req, ctx.res);
 
   const account = await accountService.get(ctx.request.body.username);
-  let otpauth = `otpauth://totp/Google:${account.email}?secret=${account.mfa_secret}?issuer=Google`;
   if (name === "login") {
     let result: any;
 
@@ -40,11 +39,8 @@ export const login = (oidc) => async (ctx) => {
         },
       };
 
-      const qrData = await qrcode.toDataURL(otpauth)     
-      console.log("qr code here: ",otpauth);
       return ctx.render("multiFactor", {
         title: "Enter Verification Code",
-        qrImage: qrData,
         uid: ctx.params.uid,
         username: ctx.request.body.username,
       });

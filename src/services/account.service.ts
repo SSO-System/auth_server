@@ -25,7 +25,8 @@ export const update = async (username: string, data: any) => {
         picture: data.picture,
         birthdate: data.birthdate,
         created_at: data.created_at,
-        password: data.password
+        password: data.password,
+        mfa_secret: data.mfa_secret,
     }
 
     const query_string: string[] = [];

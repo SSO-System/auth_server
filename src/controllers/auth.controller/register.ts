@@ -1,4 +1,5 @@
 import * as accountService from "../../services/account.service";
+import base64url from "base64url";
 
 import nodemailer from "nodemailer";
 
@@ -11,13 +12,13 @@ function sendMailValidate(newUser) {
     },
   });
   console.log("new user", newUser);
-
+  const code = base64url(newUser.username + newUser.uriRegister + newUser.email)
   var mailOptions = {
     from: "dangluan15112001@gmail.com",
     to: newUser.email,
     subject: "Welcome new user...",
     html: `<h1>Welcome</h1>
-    <a href="http://localhost:3000/verifyEmail?username=${newUser.username}&uriRegister=${newUser.uriRegister}">Click to verify your email</a>`,
+    <a href="${process.env.ISSUER}/verifyEmail?username=${newUser.username}&code=${code}">Click to verify your email</a>`,
   };
 
   var sendMailFun = (mailOptions) => {
@@ -74,8 +75,6 @@ export const register = (oidc) => async (ctx) => {
   const emailVerifiedInfo = { email: body.email, username: body.username, uriRegister: uriRegister };
   sendMailValidate(emailVerifiedInfo);
 
-
-
   let result: any;
   result = {
     login: {
@@ -97,5 +96,6 @@ export const register = (oidc) => async (ctx) => {
       prompt: debug(prompt),
     },
     authServerUrl: process.env.ISSUER,
+    message: "",
   });
 };

@@ -21,7 +21,7 @@ body.app {
     margin: auto; padding: 2rem;
     text-align: center;
     background-color: #fff;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); */
     border-radius: 20px;
 }
 
@@ -184,6 +184,13 @@ body.app {
 
 .grant-debug div {
   padding-top: 10px;
+}
+
+.qrCode {
+  box-shadow: 2px 2px 2px #666;
+  width: 50%;
+  display: block; 
+  margin: auto;
 }
 
 ul {

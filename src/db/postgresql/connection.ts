@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
 
 let pool = new Pool({
-
         user: 'sso',
         host: '42.117.5.115',
         database: 'INTERN-SSO',
